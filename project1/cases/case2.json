@@ -1,0 +1,7 @@
+{
+    "name": "kernel_case2",
+    "ins": ["B"],
+    "outs": ["A"],
+    "data_type": "int",
+    "kernel": "A<8, 8>[i, j] = (B<10, 10>[i, j] + B<10, 10>[i + 1, j] + B<10, 10>[i + 2, j]) / 3;"
+}
