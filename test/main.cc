@@ -8,6 +8,6 @@
 
 int main(int argc, char** argv)
 {
-	generate(argv[1]);
+	std::cout << generate(argv[1]) << std::endl;
 	return 0;
 }
