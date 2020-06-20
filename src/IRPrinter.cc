@@ -311,7 +311,7 @@ void IRPrinter::visit(Ref<const Move> op) { //YZW Done
     } else if (op->move_type == MoveType::SharedToShared) {
         CHECK(0, "move type shared_to_shared is not supported.");
     } else if (op->move_type == MoveType::MemToMem) {
-        oss << " = ";
+        oss << " += ";
     } else if (op->move_type == MoveType::LocalToLocal) {
         CHECK(0, "move type local_to_local is not supported.");
     }

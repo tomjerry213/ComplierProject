@@ -32,7 +32,7 @@ std::string generate(char* argv) {
 	std::string typ = x.data_type?"float ": "int ";
     int tag = 0;
 	for (int i = 0; i < x.inputs.size(); i++) {
-        if (x.inout[x.inputs[i]]) continue;
+        if (x.inout[x.inputs[i]] || x.inInput[x.inputs[i]] != 1) continue;
 		if (tag) vars = vars + ", "; else tag = 1;
 		if (x.valSize[x.inputs[i]].size() == 0)
 			vars = vars + typ + "&" + x.inputs[i];
@@ -50,14 +50,20 @@ std::string generate(char* argv) {
 		if (x.valSize[x.outputs[i]].size() == 0)
 			vars = vars + typ + "&" + x.outputs[i];
 		else {
-			vars = vars + typ + "(&" + x.outputs[i] +")";
+			vars = vars + typ + "(&d" + x.outputs[i] +")";
 			for (auto j : x.valSize[x.outputs[i]]) {
 				vars =  vars + "[" + std::to_string(j) + "]";
 			}
 		}
         x.inout[x.outputs[i]] = 1;
 	}
-	vars = "#include \"../run.h\"\n\nvoid " + x.kernelName + "(" + vars + ") {\n" +  printer.print(kernel) + "}\n" ;
+	for (auto name : x.grads) {
+		if (tag) vars = vars + ", "; else tag = 1;
+		vars = vars + typ + "(&d" + name + ")";
+		for (auto j : x.valSize[name])
+			vars = vars + "[" + std::to_string(j) + "]";
+	}
+	vars = "#include \"../run2.h\"\n\nvoid " + x.kernelName + "(" + vars + ") {\n" +  printer.print(kernel) + "}\n" ;
     //delete &x.p;
 	return vars;
 	//return 0;

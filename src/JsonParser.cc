@@ -77,6 +77,27 @@ void JsonParser::loadJson(char * fileName) {
     for (; str[pos] != '"'; pos++)
         kernel = kernel + str[pos];
 
+    std::getline(std::cin, str);
+    l = str.size();
+    for (int i = 0; i < l; i++)
+        if(str[i] == '[') {
+            pos = i + 1;
+            break;
+        }
+    valName = "";
+    for (; str[pos] != ']'; pos++) {
+        if (str[pos] == '"') {
+            if (flag == 0) flag = 1;
+            else {
+                //std::cout << valName << std::endl;
+                grads.insert(valName);
+                flag = 0;
+                valName = "";
+            }
+        }
+        else if (flag) valName = valName + str[pos];
+    }
+
     freopen("/dev/tty", "r", stdin);
 }
 
