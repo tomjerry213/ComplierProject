@@ -10,6 +10,16 @@ class JsonAbsiVisitor {
     std::vector<Expr> allIndex;
     std::map<std::string, int> iterMap;
     std::vector<std::pair<Expr, Expr> > allCondition;
+    bool flag = false;
+    bool flag2 = false;
+    bool flag3 = false;
+    int cnt = '0';
+    std::vector<Expr> need_grad;
+    std::vector<Expr> need_grad_ori;
+    std::vector<std::pair<Expr, Expr> > allEqualCondition;
+
+    int maxId = 0;
+    int nowId = 0;
 
     virtual Stmt visit(P* op, Type argu);
     virtual Stmt visit(S* op, Type argu);

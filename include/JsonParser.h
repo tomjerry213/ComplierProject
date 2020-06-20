@@ -14,6 +14,7 @@ class JsonParser {
     std::unordered_map<std::string, IterId*> iters;    
     std::vector<std::string> inputs;
     std::vector<std::string> outputs;
+    std::set<std::string> grads;
     std::stack<void *> parseStack;
     std::stack<std::string> typeStack;
     std::stack<char> symbolStack;
@@ -21,6 +22,7 @@ class JsonParser {
 
     std::map<std::string, std::vector<size_t> > valSize;
     std::map<std::string, int> inout;
+    std::map<std::string, int> inInput;
 
     RHS* getRHS(RHS* p1, char p2, RHS* p3) {
         Expression* exp;

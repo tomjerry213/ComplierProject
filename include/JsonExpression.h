@@ -96,7 +96,7 @@ class LHS {
 class RHS {
  public:
     Expression* p1;
-    
+    int id = 0;
     void accept(JsonVisitor* visitor);
     void* accept(JsonArguVisitor* visitor, void* argu);
     Expr accept(JsonAbsiVisitor* visitor, Type argu);
@@ -111,6 +111,7 @@ class RHS {
 
 class Expression {
  public:
+    int id = 0;
     virtual void accept(JsonVisitor* visitor);
     virtual void* accept(JsonArguVisitor* visitor, void* argu);
     virtual Expr accept(JsonAbsiVisitor* visitor, Type argu);
@@ -276,6 +277,8 @@ class TRef : public Expression {
     char p5;
     AList* p6;
     char p7;
+
+    std::vector<Expr> lazy;
     
     void accept(JsonVisitor* visitor);
     void* accept(JsonArguVisitor* visitor, void* argu);
